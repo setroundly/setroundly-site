@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { liveEvents } from "@/data/liveEvents";
 
+export const runtime = "nodejs";
+
 const contactMail = "setroundly.info@gmail.com";
 
 type ReservationBody = {
