@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+// @ts-expect-error: nodemailer v7 ships without compatible type declarations in this environment
 import nodemailer from "nodemailer";
 import { liveEvents } from "@/data/liveEvents";
 
