@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { liveEvents } from "@/data/liveEvents";
 
 const snsLinks = [
@@ -93,7 +94,7 @@ export default function Home() {
   return (
     <main className="bg-white">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
-        <a href="/" className="block">
+        <Link href="/" className="block">
           <Image
             src="/images/setroundly-logo.png"
             alt="SETROUNDLY logo"
@@ -102,17 +103,17 @@ export default function Home() {
             className="h-auto w-[170px] sm:w-[220px]"
             priority
           />
-        </a>
+        </Link>
         <nav className="flex gap-5 text-sm text-slate-600">
-          <a href="#live" className="hover:text-slate-900">
+          <Link href="#live" className="hover:text-slate-900">
             LIVE
-          </a>
-          <a href="#sns" className="hover:text-slate-900">
+          </Link>
+          <Link href="#sns" className="hover:text-slate-900">
             SNS
-          </a>
-          <a href="/info" className="hover:text-slate-900">
+          </Link>
+          <Link href="/info" className="hover:text-slate-900">
             INFO
-          </a>
+          </Link>
         </nav>
       </header>
 
