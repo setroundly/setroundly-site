@@ -12,25 +12,78 @@ const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp"
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://setroundly-site.vercel.app";
+const siteName = "SETROUNDLY Official";
+const siteDescription =
+  "SETROUNDLY（セットラウンドリー）オフィシャルサイト。「人と人との間に起こること。」をテーマに島﨑が描く繊細な楽曲を発信。最新ライブ情報、SNS、BASE SHOPはこちら。";
+
 export const metadata: Metadata = {
-  title: "SETROUNDLY Official",
-  description: "SETROUNDLYオフィシャルサイト。ライブ情報、SNS、BASE SHOPの最新情報を掲載。",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteName,
+    template: "%s | SETROUNDLY"
+  },
+  description: siteDescription,
+  applicationName: siteName,
+  keywords: [
+    "SETROUNDLY",
+    "セットラウンドリー",
+    "Setroundly",
+    "島﨑",
+    "島崎",
+    "シンガーソングライター",
+    "ロック",
+    "JAPAN JAM",
+    "オフィシャルサイト",
+    "公式サイト",
+    "ライブ",
+    "予約",
+    "BASE SHOP"
+  ],
+  authors: [{ name: "SETROUNDLY" }],
+  creator: "SETROUNDLY",
+  publisher: "SETROUNDLY",
+  alternates: {
+    canonical: "/"
+  },
   openGraph: {
-    title: "SETROUNDLY Official",
-    description: "SETROUNDLYオフィシャルサイト。ライブ情報、SNS、BASE SHOPの最新情報を掲載。",
-    images: ["/ogp.png"],
+    title: siteName,
+    description: siteDescription,
+    url: siteUrl,
+    siteName,
+    images: [
+      {
+        url: "/ogp.png",
+        width: 1200,
+        height: 630,
+        alt: "SETROUNDLY"
+      }
+    ],
     type: "website",
     locale: "ja_JP"
   },
   twitter: {
     card: "summary_large_image",
-    title: "SETROUNDLY Official",
-    description: "SETROUNDLYオフィシャルサイト。ライブ情報、SNS、BASE SHOPの最新情報を掲載。",
-    images: ["/ogp.png"]
+    title: siteName,
+    description: siteDescription,
+    images: ["/ogp.png"],
+    site: "@set_roundly",
+    creator: "@set_roundly"
   },
   icons: {
     icon: "/icon.png",
     apple: "/icon.png"
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
   }
 };
 

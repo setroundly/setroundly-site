@@ -92,11 +92,60 @@ function SnsIcon({ name }: { name: string }) {
   );
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://setroundly-site.vercel.app";
+
+const musicGroupJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: "SETROUNDLY",
+  alternateName: ["セットラウンドリー", "Setroundly"],
+  url: siteUrl,
+  image: `${siteUrl}/ogp.png`,
+  logo: `${siteUrl}/images/setroundly-logo.png`,
+  foundingDate: "2012",
+  genre: ["Rock", "J-Pop", "Singer-Songwriter"],
+  description:
+    "「人と人との間に起こること。」をテーマに、ボーカル島﨑の描く繊細で短編小説のような楽曲が広い世代の支持を受ける。",
+  sameAs: [
+    "https://x.com/set_roundly",
+    "https://www.instagram.com/setroundly_official/",
+    "https://www.youtube.com/@seiroundly",
+    "https://www.tiktok.com/@setroundlyshima",
+    "https://www.tunecore.co.jp/artists/setroundly2?lang=en",
+    "https://setroundly.base.shop/"
+  ]
+};
+
 export default function Home() {
   const events = getPublishedLiveEvents();
 
+  const eventsJsonLd = events.map((event) => ({
+    "@context": "https://schema.org",
+    "@type": "MusicEvent",
+    name: event.title || `${event.dateLabel} ${event.venue}`,
+    startDate: event.publishAt ?? undefined,
+    location: {
+      "@type": "Place",
+      name: event.venue
+    },
+    performer: { "@type": "MusicGroup", name: "SETROUNDLY" },
+    offers: event.ticketUrl
+      ? { "@type": "Offer", url: event.ticketUrl, availability: "https://schema.org/InStock" }
+      : undefined
+  }));
+
   return (
     <main className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(musicGroupJsonLd) }}
+      />
+      {eventsJsonLd.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventsJsonLd) }}
+        />
+      )}
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
         <Link href="/" className="block">
           <Image
