@@ -8,7 +8,9 @@ export type LiveEvent = {
   price: string;
   streamingPrice: string;
   streamingUrl: string;
+  ticketUrl?: string;
   note: string;
+  publishAt?: string;
 };
 
 export const liveEvents: LiveEvent[] = [
@@ -23,5 +25,29 @@ export const liveEvents: LiveEvent[] = [
     streamingPrice: "配信 2000円",
     streamingUrl: "https://premier.twitcasting.tv/c:laguna_shimokita/shopcart/428371",
     note: "※視聴Ticketはツイキャス公式ストアから御購入ください。"
+  },
+  {
+    id: "2026-06-06-asagaya-lonesome",
+    dateLabel: "6.6(土)",
+    venue: "阿佐ヶ谷ロンサム",
+    title: "『Acoustic!!』Oh my! 1st FULL ALBUM「Doodle」RELEASE TOUR",
+    artists: ["18:30 SETROUNDLY", "19:50 市原マサヒロ", "20:40 Oh my!"],
+    openStart: "OPEN 18:00／START 18:30",
+    price: "TICKET ¥3,000(+1Drink ¥600)",
+    streamingPrice: "配信 ¥2,500",
+    streamingUrl: "https://premier.twitcasting.tv/lonesome_live/shopcart/433859",
+    ticketUrl: "https://tiget.net/events/488723",
+    note: "",
+    publishAt: "2026-05-10T14:30:00+09:00"
   }
 ];
+
+export function getPublishedLiveEvents(now: Date = new Date()): LiveEvent[] {
+  const ts = now.getTime();
+  return liveEvents.filter((event) => {
+    if (!event.publishAt) return true;
+    const publishTs = new Date(event.publishAt).getTime();
+    if (Number.isNaN(publishTs)) return true;
+    return publishTs <= ts;
+  });
+}

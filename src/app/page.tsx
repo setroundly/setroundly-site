@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { liveEvents } from "@/data/liveEvents";
+import { getPublishedLiveEvents } from "@/data/liveEvents";
+
+export const revalidate = 60;
 
 const snsLinks = [
   {
@@ -91,6 +93,8 @@ function SnsIcon({ name }: { name: string }) {
 }
 
 export default function Home() {
+  const events = getPublishedLiveEvents();
+
   return (
     <main className="bg-white">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
@@ -160,7 +164,10 @@ export default function Home() {
 
       <section id="live" className="mx-auto w-full max-w-6xl border-t border-slate-200 px-5 py-12 sm:px-8">
         <h2 className="font-[var(--font-orbitron)] text-2xl tracking-[0.1em]">LIVE INFORMATION</h2>
-        {liveEvents.map((event) => (
+        {events.length === 0 && (
+          <p className="mt-8 text-sm text-slate-500">情報が入り次第お知らせします。</p>
+        )}
+        {events.map((event) => (
           <article key={event.id} className="mt-8 border-b border-slate-200 pb-8 text-slate-800">
             <p className="text-sm tracking-[0.08em] text-slate-500">{event.dateLabel}</p>
             <h3 className="mt-1 text-xl">{event.venue}</h3>
@@ -180,15 +187,27 @@ export default function Home() {
               <br />
               {event.streamingPrice}
             </p>
-            <p className="mt-4 text-sm text-slate-600">{event.note}</p>
-            <a
-              href={event.streamingUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-5 inline-block rounded-full border border-slate-300 px-5 py-2 text-sm transition hover:border-sky-500 hover:text-sky-600"
-            >
-              配信チケット購入URL
-            </a>
+            {event.note && <p className="mt-4 text-sm text-slate-600">{event.note}</p>}
+            <div className="mt-5 flex flex-wrap gap-3">
+              {event.ticketUrl && (
+                <a
+                  href={event.ticketUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block rounded-full border border-slate-300 px-5 py-2 text-sm transition hover:border-sky-500 hover:text-sky-600"
+                >
+                  来場予約
+                </a>
+              )}
+              <a
+                href={event.streamingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block rounded-full border border-slate-300 px-5 py-2 text-sm transition hover:border-sky-500 hover:text-sky-600"
+              >
+                配信チケット購入URL
+              </a>
+            </div>
           </article>
         ))}
       </section>
