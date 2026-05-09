@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { liveEvents } from "@/data/liveEvents";
+import { getPublishedLiveEvents } from "@/data/liveEvents";
 
 export const runtime = "nodejs";
 
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "必須項目が不足しています。" }, { status: 400 });
     }
 
-    const event = liveEvents.find((item) => item.id === eventId);
+    const event = getPublishedLiveEvents().find((item) => item.id === eventId);
     if (!event) {
       return NextResponse.json({ error: "公演日の選択が不正です。" }, { status: 400 });
     }

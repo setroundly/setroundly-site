@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { liveEvents } from "@/data/liveEvents";
+import { getPublishedLiveEvents } from "@/data/liveEvents";
 
 type FormErrors = {
   eventId?: string;
@@ -12,7 +12,9 @@ type FormErrors = {
 };
 
 export default function InfoPage() {
-  const [eventId, setEventId] = useState(liveEvents[0]?.id ?? "");
+  const [now, setNow] = useState<Date>(() => new Date());
+  const events = useMemo(() => getPublishedLiveEvents(now), [now]);
+  const [eventId, setEventId] = useState(events[0]?.id ?? "");
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("1");
   const [message, setMessage] = useState("");
@@ -20,7 +22,20 @@ export default function InfoPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
 
-  const selectedEvent = useMemo(() => liveEvents.find((event) => event.id === eventId), [eventId]);
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!eventId && events[0]) {
+      setEventId(events[0].id);
+    } else if (eventId && !events.find((event) => event.id === eventId)) {
+      setEventId(events[0]?.id ?? "");
+    }
+  }, [events, eventId]);
+
+  const selectedEvent = useMemo(() => events.find((event) => event.id === eventId), [events, eventId]);
 
   const validate = () => {
     const nextErrors: FormErrors = {};
@@ -93,14 +108,19 @@ export default function InfoPage() {
             <select
               value={eventId}
               onChange={(e) => setEventId(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-400"
+              className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-400 disabled:bg-slate-50"
               required
+              disabled={events.length === 0}
             >
-              {liveEvents.map((event) => (
-                <option key={event.id} value={event.id}>
-                  {event.dateLabel} / {event.venue}
-                </option>
-              ))}
+              {events.length === 0 ? (
+                <option value="">公開中の公演がありません</option>
+              ) : (
+                events.map((event) => (
+                  <option key={event.id} value={event.id}>
+                    {event.dateLabel} / {event.venue}
+                  </option>
+                ))
+              )}
             </select>
             {errors.eventId && <p className="mt-1 text-xs text-rose-500">{errors.eventId}</p>}
           </label>
