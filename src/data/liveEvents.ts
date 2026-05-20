@@ -39,6 +39,19 @@ export const liveEvents: LiveEvent[] = [
     ticketUrl: "https://tiget.net/events/488723",
     note: "",
     publishAt: "2026-05-10T14:30:00+09:00"
+  },
+  {
+    id: "2026-07-09-laguna",
+    dateLabel: "7.9(木)",
+    venue: "下北沢Laguna",
+    title: "Laguna 18th Anniversary <Fish>",
+    artists: ["SETROUNDLY", "春馬。", "オオモリヨウヘイ", "木村ケンシン", "古郡翔馬"],
+    openStart: "OPEN 18:10／START 18:40",
+    price: "前売 3000円(D別)／当日 3500円(D別)",
+    streamingPrice: "配信 2000円",
+    streamingUrl: "https://premier.twitcasting.tv/c:laguna_shimokita/shopcart/435375",
+    note: "※視聴Ticketはツイキャス公式ストアから御購入ください。",
+    publishAt: "2026-05-11T19:00:00+09:00"
   }
 ];
 
