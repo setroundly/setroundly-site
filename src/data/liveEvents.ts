@@ -1,5 +1,6 @@
 export type LiveEvent = {
   id: string;
+  eventDate: string;
   dateLabel: string;
   venue: string;
   title: string;
@@ -16,6 +17,7 @@ export type LiveEvent = {
 export const liveEvents: LiveEvent[] = [
   {
     id: "2026-05-29-laguna",
+    eventDate: "2026-05-29",
     dateLabel: "5.29(金)",
     venue: "下北沢Laguna",
     title: "<Blue>",
@@ -28,6 +30,7 @@ export const liveEvents: LiveEvent[] = [
   },
   {
     id: "2026-06-06-asagaya-lonesome",
+    eventDate: "2026-06-06",
     dateLabel: "6.6(土)",
     venue: "阿佐ヶ谷ロンサム",
     title: "『Acoustic!!』Oh my! 1st FULL ALBUM「Doodle」RELEASE TOUR",
@@ -42,6 +45,7 @@ export const liveEvents: LiveEvent[] = [
   },
   {
     id: "2026-07-09-laguna",
+    eventDate: "2026-07-09",
     dateLabel: "7.9(木)",
     venue: "下北沢Laguna",
     title: "Laguna 18th Anniversary <Fish>",
@@ -55,12 +59,27 @@ export const liveEvents: LiveEvent[] = [
   }
 ];
 
+function getTodayJst(now: Date): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(now);
+}
+
 export function getPublishedLiveEvents(now: Date = new Date()): LiveEvent[] {
   const ts = now.getTime();
-  return liveEvents.filter((event) => {
-    if (!event.publishAt) return true;
-    const publishTs = new Date(event.publishAt).getTime();
-    if (Number.isNaN(publishTs)) return true;
-    return publishTs <= ts;
-  });
+  const todayJst = getTodayJst(now);
+
+  return liveEvents
+    .filter((event) => {
+      if (event.eventDate < todayJst) return false;
+
+      if (!event.publishAt) return true;
+      const publishTs = new Date(event.publishAt).getTime();
+      if (Number.isNaN(publishTs)) return true;
+      return publishTs <= ts;
+    })
+    .sort((a, b) => a.eventDate.localeCompare(b.eventDate));
 }
