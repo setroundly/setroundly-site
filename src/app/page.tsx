@@ -248,14 +248,16 @@ export default function Home() {
                   来場予約
                 </a>
               )}
-              <a
-                href={event.streamingUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block rounded-full border border-slate-300 px-5 py-2 text-sm transition hover:border-sky-500 hover:text-sky-600"
-              >
-                配信チケット購入URL
-              </a>
+              {event.streamingUrl && (
+                <a
+                  href={event.streamingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block rounded-full border border-slate-300 px-5 py-2 text-sm transition hover:border-sky-500 hover:text-sky-600"
+                >
+                  配信チケット購入URL
+                </a>
+              )}
             </div>
           </article>
         ))}
