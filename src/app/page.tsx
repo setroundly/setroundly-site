@@ -241,6 +241,17 @@ export default function Home() {
               )}
             </p>
             {event.note && <p className="mt-4 text-sm text-slate-600">{event.note}</p>}
+            {event.timetableImage && (
+              <div className="mt-5 overflow-hidden rounded-xl border border-slate-200">
+                <Image
+                  src={event.timetableImage}
+                  alt={`${event.title} タイムテーブル`}
+                  width={1200}
+                  height={1600}
+                  className="h-auto w-full"
+                />
+              </div>
+            )}
             <div className="mt-5 flex flex-wrap gap-3">
               {event.ticketUrl && (
                 <a
