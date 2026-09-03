@@ -7,7 +7,7 @@ export type LiveEvent = {
   artists: string[];
   openStart: string;
   price: string;
-  streamingPrice: string;
+  streamingPrice?: string;
   streamingUrl?: string;
   ticketUrl?: string;
   note: string;
@@ -56,6 +56,20 @@ export const liveEvents: LiveEvent[] = [
     streamingPrice: "配信 ¥2,500",
     ticketUrl: "/info",
     note: "※配信チケットは公演1週間前よりツイキャスプレミアムにて販売予定。※来場チケットには配信アーカイブ付き（店頭にてご案内）。"
+  },
+  {
+    id: "2026-09-26-asagaya-lonely-street-magic",
+    eventDate: "2026-09-27",
+    dateLabel: "9.26(土)・9.27(日)",
+    venue: "Live Bar ロンサム / mogumogu / オイルシティ",
+    title: "『阿佐ヶ谷ロンリー・ストリート・マジック』",
+    artists: [
+      "秋山カラスウリ / 朝原望美 / イケダトモユキ / isam ; u ; luha / 岩田燿介 / 梅田淳平 / Oh my! / 仮屋ナオト / 神田美咲(あたらしい星座) / 清花 / Kiwano / 金魚太郎 / ここにいるよ杉浦 / こだまたいちとドンタカシ / 五味礼一郎(WELL DONE SABOTAGE) / さとうじゅん / shinme. / 鈴木柊平 / 鈴木ワタル / SETROUNDLY / センポクカンポク / タナカノコハル / たなかりょすけ / ちぇる / 内藤重人 / 西塚ちえ(ニンゲンハトベナイ) / 西山小雨 / にんじん苦手 / 沼田謙二朗 / 畠山拓郎 / 濱野正基 / 平松稜大(たけとんぼ) / 藤村拓也 / 浮遊感チエ / 冬山登山 / 平日 / 堀孝輔(みずすまし) / Mir Nakajima / 水野ねじ / 宮村梨瑚 / 八島未樹 / よしだのいぬ(Gum Girl)"
+    ],
+    openStart: "OPEN 14:30／START 15:00",
+    price: "入場料 ¥3,000(+ order)",
+    ticketUrl: "/info",
+    note: "※3会場往来自由。主催：阿佐ヶ谷 Live Bar ロンサム。予約：各アーティスト／阿佐ヶ谷ロンサム。受付：当日各会場にて。"
   }
 ];
 

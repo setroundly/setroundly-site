@@ -233,8 +233,12 @@ export default function Home() {
               {event.openStart}
               <br />
               {event.price}
-              <br />
-              {event.streamingPrice}
+              {event.streamingPrice && (
+                <>
+                  <br />
+                  {event.streamingPrice}
+                </>
+              )}
             </p>
             {event.note && <p className="mt-4 text-sm text-slate-600">{event.note}</p>}
             <div className="mt-5 flex flex-wrap gap-3">
